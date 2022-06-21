@@ -686,8 +686,6 @@ class DrawDistinguisher():
         fid.write('\\end{tikzpicture}'+'\n\n'+'\\end{document}')
         fid.close()
 
-#D = DrawDistinguisher('./Model8_R6_OneRule_KSNoGuessGuessBoth_OneDir/V2_TR6_ini3_inikr3_matr1_all_8.sol', 6,3,3,1); D.draw('./Model8_R6_OneRule_KSNoGuessGuessBoth_OneDir/V2_TR6_ini3_inikr3_matr1_all_8_SupP_.tex'); system("pdflatex -output-directory='./Model8_R6_OneRule_KSNoGuessGuessBoth_OneDir' ./Model8_R6_OneRule_KSNoGuessGuessBoth_OneDir/V2_TR6_ini3_inikr3_matr1_all_8_SupP_.tex") 
-
 #D = DrawDistinguisher('./Model4_R6_Simplified/TR6_ini3_inikr3_matr1_all_1.sol', 6,3,3,1); D.draw('./Model4_R6_Simplified/TR6_ini3_inikr3_matr1_all_1.tex'); system("pdflatex -output-directory='./Model4_R6_Simplified' ./Model4_R6_Simplified/TR6_ini3_inikr3_matr1_all_1.tex") 
 
 D = DrawDistinguisher('./Model8_R6_Simplified/TR6_ini3_inikr3_matr1_all_8.sol', 6,3,3,1); D.draw('./Model8_R6_Simplified/TR6_ini3_inikr3_matr1_all_8.tex'); system("pdflatex -output-directory='./Model8_R6_Simplified' ./Model8_R6_Simplified/TR6_ini3_inikr3_matr1_all_8.tex") 
