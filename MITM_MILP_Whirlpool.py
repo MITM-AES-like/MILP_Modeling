@@ -1508,7 +1508,3 @@ def cmd(fpath, TotalRound, InitRound, InitKRound, MatchRound):
 
 if __name__ == "__main__":
     cmd(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
-
-#nohup python /home/baozhenzhen/Research/AES/MITM_MILP_Whirlpool.py '/home/baozhenzhen/Research/AES/Model4_R7_Simplified/' 7 5 5 6 > "/home/baozhenzhen/Research/AES/Model4_R7_Simplified/Model4_R7_Simplified.log" &
-#nohup python /home/baozhenzhen/Research/AES/MITM_MILP_Whirlpool.py '/home/baozhenzhen/Research/AES/Model8_R6_Simplified/' 6 3 3 1 > "/home/baozhenzhen/Research/AES/Model8_R6_Simplified/Model8_R6_Simplified.log" &
-#nohup python /home/baozhenzhen/Research/AES/MITM_MILP_Whirlpool.py '/home/baozhenzhen/Research/AES/Model4_R6_Simplified/' 6 3 3 1 > "/home/baozhenzhen/Research/AES/Model4_R6_Simplified/Model4_R6_Simplified.log" &
