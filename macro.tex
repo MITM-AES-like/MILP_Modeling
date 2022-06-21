@@ -1,0 +1,282 @@
+
+\pgfmathsetmacro\g{2}
+\pgfmathsetmacro\w{8 + \g}
+\pgfmathsetmacro\h{-7}
+\pgfmathsetmacro\foldu{0.50 * \h}
+\pgfmathsetmacro\foldd{0.50 * \h}
+
+\pgfmathsetmacro\blockt{-1.2}
+\pgfmathsetmacro\blockb{-2 * \blockt}
+\pgfmathsetmacro\blockts{-0.2}
+\pgfmathsetmacro\blockbs{-2 * \blockts}
+
+\pgfmathsetmacro\blockl{-0.3}
+\pgfmathsetmacro\blockr{-2 * \blockl}
+
+\pgfmathsetmacro\ruleb{+0.33}
+\pgfmathsetmacro\rulel{-1.1}
+\pgfmathsetmacro\rulelsm{-0.0}
+\pgfmathsetmacro\rulelsl{-0.4}
+\pgfmathsetmacro\rulelsr{+0.4}
+
+\newcommand{\DC}{DC\xspace}
+\newcommand{\MILP}{MILP\xspace}
+\newcommand{\GAD}{GnD\xspace}
+\newcommand{\BiDir}{BiDir\xspace}
+\newcommand{\SP}{SP\xspace}
+\newcommand{\SupP}{SupP\xspace}
+\newcommand{\MulAK}{MulAK\xspace}
+\tikzset{
+	GAD/.style={draw=blue!15, fill=blue!15, blur shadow={shadow blur steps=5}},
+	BiDir/.style={draw=yellow!15, fill=yellow!15, blur shadow={shadow blur steps=5}},
+	SupP/.style={draw=green!15, fill=green!15, blur shadow={shadow blur steps=5}},
+	MulAK/.style={draw=red!15, fill=red!15, blur shadow={shadow blur steps=5}},
+}
+
+\newcommand{\SB}{\ifmmode \#\mathrm{SB} \else $\#\mathrm{SB}$\fi\xspace}
+\newcommand{\SR}{\ifmmode \#\mathrm{SR} \else $\#\mathrm{SR}$\fi\xspace}
+\newcommand{\MC}{\ifmmode \#\mathrm{MC} \else $\#\mathrm{MC}$\fi\xspace}
+\newcommand{\AK}{\ifmmode \#\mathrm{AK} \else $\#\mathrm{AK}$\fi\xspace}
+\newcommand{\AT}{\ifmmode \#\mathrm{AT} \else $\#\mathrm{AT}$\fi\xspace}
+\newcommand{\AC}{\ifmmode \#\mathrm{AC} \else $\#\mathrm{AC}$\fi\xspace}
+\newcommand{\KMC}{\ifmmode \#\mathrm{KMC} \else $\#\mathrm{KMC}$\fi\xspace}
+\newcommand{\MCBL}{\ifmmode \#\mathrm{MC}_\mathtt{BL} \else $\#\mathrm{MC}_\mathtt{BL}$\fi\xspace}
+\newcommand{\MCRD}{\ifmmode \#\mathrm{MC}_\mathtt{RD} \else $\#\mathrm{MC}_\mathtt{RD}$\fi\xspace}
+\newcommand{\AKBL}{\ifmmode \#\mathrm{AK}_\mathtt{BL} \else $\#\mathrm{AK}_\mathtt{BL}$\fi\xspace}
+\newcommand{\AKRD}{\ifmmode \#\mathrm{AK}_\mathtt{RD} \else $\#\mathrm{AK}_\mathtt{RD}$\fi\xspace}
+\newcommand{\AKMC}{\ifmmode \mathrm{A}_{\mathrm{K{MC}}} \else $\mathrm{A}_{\mathrm{K{MC}}}$\fi\xspace}
+
+\newcommand{\bpass}{bypassed\xspace}
+
+\newcommand{\DoFF}{\relax \tikz{\draw[solid, fill = blue, scale = 0.18] (0, 0) rectangle (1, 1);}\xspace}
+\newcommand{\DoFB}{\relax \tikz{\draw[solid, fill = red, scale = 0.18] (0, 0) rectangle (1, 1);}\xspace}
+\newcommand{\DoM}{\relax \tikz{\draw[solid, fill = blue!50!red, scale = 0.18] (0, 0) rectangle (1, 1);}\xspace}
+\newcommand{\DoFFG}{\relax \tikz{\draw[solid, fill = cyan, scale = 0.18] (0, 0) rectangle (1, 1);}\xspace}
+\newcommand{\DoFBG}{\relax \tikz{\draw[solid, fill = pink, scale = 0.18] (0, 0) rectangle (1, 1);}\xspace}
+\newcommand{\DoFFBG}{\relax \tikz{\draw[solid, fill = green, scale = 0.18] (0, 0) rectangle (1, 1);}\xspace}
+
+\newcommand{\Nfor}{\relax \ifmmode N^{+} \else $N^{+}$\fi\xspace}
+\newcommand{\Nback}{\relax \ifmmode N^{-} \else $N^{-}$\fi\xspace}
+\newcommand{\Cfor}{\relax \ifmmode C^{+} \else $C^{+}$\fi\xspace}
+\newcommand{\Cback}{\relax \ifmmode C^{-} \else $C^{-}$\fi\xspace}
+\newcommand{\Cneut}{\relax \ifmmode \mathtt{C} \else $\mathtt{C}$\fi\xspace}
+\newcommand{\Cinit}{\relax \ifmmode C^{\tt init} \else $C^{\tt init}$\fi\xspace}
+\newcommand{\Ckey}{\relax \ifmmode C^{\tt key} \else $C^{\tt key}$\fi\xspace}
+\newcommand{\Tfor}{\relax \ifmmode T^{\tt f} \else $T^{\tt f}$\fi\xspace}
+\newcommand{\Tback}{\relax \ifmmode T^{-} \else $T^{-}$\fi\xspace}
+\newcommand{\Cbyte}{\relax \ifmmode C^{\tt byte} \else $C^{\tt byte}$\fi\xspace}
+\newcommand{\Bfor}{\relax \ifmmode B^{+} \else $B^{+}$\fi\xspace}
+\newcommand{\Bback}{\relax \ifmmode B^{-} \else $B^{-}$\fi\xspace}
+\newcommand{\Mfor}{\relax \ifmmode M^{+} \else $M^{+}$\fi\xspace}
+\newcommand{\Mback}{\relax \ifmmode M^{-} \else $M^{-}$\fi\xspace}
+\newcommand{\Lfor}{\relax \ifmmode L^{+} \else $L^{+}$\fi\xspace}
+\newcommand{\Lback}{\relax \ifmmode L^{-} \else $L^{-}$\fi\xspace}
+\newcommand{\new}{[{\relax \color{blue}new}]\xspace}
+
+\def\FW{blue}
+\def\BW{red}
+\def\UW{white}
+\def\CW{gray}
+\def\MW{blue!50!red}
+
+\def\match{yellow!15}
+\def\xormcrule{green!15}
+\def\mcrule{blue!15}
+\def\xorfrule{cyan!15}
+\def\xorbrule{gray!15}
+
+% Match 
+\newcommand{\MatchFrame}{\relax \tikz{\draw[dashed, fill=\match, scale = 0.25] (0, 0) rectangle (2, 1);}\xspace}
+% XOR-MC-RULE
+\newcommand{\XORMCFrame}{\relax \tikz{\draw[dashed, fill=\xormcrule, scale = 0.25] (0, 0) rectangle (2, 1);}\xspace}
+% MC-RULE
+\newcommand{\MCFrame}{\relax \tikz{\draw[dashed, fill=\mcrule, scale = 0.25] (0, 0) rectangle (2, 1);}\xspace}
+% XOR$^+$-RULE
+\newcommand{\XORFFrame}{\relax \tikz{\draw[dashed, fill=\xorfrule, scale = 0.25] (0, 0) rectangle (2, 1);}\xspace}
+% XOR$^-$-RULE
+\newcommand{\XORBFrame}{\relax \tikz{\draw[dashed, fill=\xorbrule, scale = 0.25] (0, 0) rectangle (2, 1);}\xspace}
+
+
+%%%% variable and math
+% 
+% BL: Blue
+% RD: Red
+% GY: Gray
+% WT: White
+% BG: Blue or Gray
+% RG: Red or Gray
+% Cm: Consume
+% Neu: Neutral
+% St: Start
+% End: End
+% KN: Known
+\newcommand{\varDoFBL}{\relax \ifmmode \overrightarrow{d_b} \else $\overrightarrow{d_b}$\fi\xspace}
+\newcommand{\varDoFRD}{\relax \ifmmode\overleftarrow{d_r} \else $\overleftarrow{d_r}$\fi\xspace}
+\newcommand{\varDoM}{\relax \ifmmode \stackrel{\rightarrow\leftarrow}{m} \else $\stackrel{\rightarrow\leftarrow}{m}$\fi\xspace}
+\newcommand{\varDoFGESSBL}{\relax \ifmmode \overrightarrow{d_{g_b}} \else $\overrightarrow{d_{g_b}}$\fi\xspace}
+\newcommand{\varDoFGESSRD}{\relax \ifmmode\overleftarrow{d_{g_r}} \else $\overleftarrow{d_{g_r}}$\fi\xspace}
+\newcommand{\varDoFGESSBR}{\relax \ifmmode\overleftrightarrow{d_{g_{br}}} \else $\overleftrightarrow{d_{g_{br}}}$\fi\xspace}
+\newcommand{\varDoFCell}{\relax \ifmmode \varsigma \else $\varsigma$\fi\xspace}
+
+
+\newcommand{\varBG}{\relax \ifmmode x \else $x$\fi\xspace}
+\newcommand{\varRG}{\relax \ifmmode y \else $y$\fi\xspace}
+\newcommand{\varGY}{\relax \ifmmode \beta \else $\beta$\fi\xspace}
+\newcommand{\varWT}{\relax \ifmmode \omega \else $\omega$\fi\xspace}
+\newcommand{\varBGcol}{\relax \ifmmode \vec{\varBG} \else $\vec{\varBG}$\fi\xspace}
+\newcommand{\varRGcol}{\relax \ifmmode \vec{\varRG} \else $\vec{\varRG}$\fi\xspace}
+\newcommand{\varWTcol}{\relax \ifmmode \vec{\varWT} \else $\vec{\varWT}$\fi\xspace}
+\newcommand{\varCmBLcell}{\relax \ifmmode c_{\varBG} \else $c_{\varBG}$\fi\xspace}
+\newcommand{\varCmRDcell}{\relax \ifmmode c_{\varRG} \else $c_{\varRG}$\fi\xspace}
+\newcommand{\varCmBLcol}{\relax \ifmmode c_{\varBGcol} \else $c_{\varBGcol}$\fi\xspace}
+\newcommand{\varCmRDcol}{\relax \ifmmode c_{\varRGcol} \else $c_{\varRGcol}$\fi\xspace}
+\newcommand{\varInitBL}{\relax \ifmmode \overrightarrow{\iota} \else $\overrightarrow{\iota}$\fi\xspace}
+\newcommand{\varInitRD}{\relax \ifmmode \overleftarrow{\iota} \else $\overleftarrow{\iota}$\fi\xspace}
+\newcommand{\varCmBL}{\relax \ifmmode \overrightarrow{\sigma} \else $\overrightarrow{\sigma}$\fi\xspace}
+\newcommand{\varCmRD}{\relax \ifmmode \overleftarrow{\sigma} \else $\overleftarrow{\sigma}$\fi\xspace}
+\newcommand{\varObj}{\relax \ifmmode \tau_{\mathtt{Obj}} \else $\tau_{\mathtt{Obj}}$\fi\xspace}
+%\newcommand{\varWTcol}{\relax \ifmmode \omega_col \else $\omega_col$\fi\xspace}
+%\newcommand{\varBGcol}{\relax \ifmmode \beta_col \else $\beta_col$\fi\xspace}
+%\newcommand{\varRGcol}{\relax \ifmmode \gamma_col \else $\gamma_col$\fi\xspace}
+
+\newcommand{\varMatchcol}{\relax \ifmmode \stackrel{\rightarrow\leftarrow}{m} \else $\stackrel{\rightarrow\leftarrow}{m}$\fi\xspace}
+\newcommand{\varMatchBLcol}{\relax \ifmmode \overrightarrow{m_b} \else $\overrightarrow{m_b}$\fi\xspace}
+\newcommand{\varMatchRDcol}{\relax \ifmmode \overleftarrow{m_r} \else $\overleftarrow{m_r}$\fi\xspace}
+\newcommand{\varMatchGYcol}{\relax \ifmmode \overline{m_g} \else $\overline{m_g}$\fi\xspace}
+\newcommand{\varMatchKNcol}{\relax \ifmmode \overline{m_k} \else $\overline{m_k}$\fi\xspace}
+\newcommand{\varMatchWTcol}{\relax \ifmmode \overline{m_w} \else $\overline{m_w}$\fi\xspace}
+
+\newcommand{\varMatchExistBL}{\relax \ifmmode \overrightarrow{e_b} \else $\overrightarrow{e_b}$\fi\xspace}
+\newcommand{\varMatchExistRD}{\relax \ifmmode \overleftarrow{e_r} \else $\overleftarrow{e_r}$\fi\xspace}
+\newcommand{\varMatchExistMO}{\relax \ifmmode \overline{e_m} \else $\overline{e_m}$\fi\xspace}
+\newcommand{\varMatchExistFT}{\relax \ifmmode \stackrel{\rightarrow\leftarrow}{e_f} \else $\stackrel{\rightarrow\leftarrow}{e_f}$\fi\xspace}
+
+
+% Neutral bytes, neutral bytes in BLue, neutral bytes in ReD
+\newcommand{\N}{\relax \ifmmode \mathcal{N} \else $\mathcal{N}$\fi\xspace}
+\newcommand{\NeuBL}{\relax \ifmmode \overrightarrow{\mathcal{N}} \else $\overrightarrow{\mathcal{N}}$\fi\xspace}
+\newcommand{\NeuRD}{\relax \ifmmode \overleftarrow{\mathcal{N}} \else $\overleftarrow{\mathcal{N}}$\fi\xspace}
+
+\newcommand{\ENC}{\relax \ifmmode \mathtt{ENC} \else $\mathtt{ENC}$\fi\xspace}
+\newcommand{\KSA}{\relax \ifmmode \mathtt{KSA} \else $\mathtt{KSA}$\fi\xspace}
+\newcommand{\StENC}{\relax \ifmmode \overleftrightarrow{S}^{\ENC} \else $\overleftrightarrow{S}^{\ENC}$\fi\xspace}
+\newcommand{\StKSA}{\relax \ifmmode \overleftrightarrow{S}^{\KSA} \else $\overleftrightarrow{S}^{\KSA}$\fi\xspace}
+\newcommand{\EndFwd}{\relax \ifmmode \overrightarrow{End} \else $\overrightarrow{End}$\fi\xspace}
+\newcommand{\EndBwd}{\relax \ifmmode \overleftarrow{End} \else $\overleftarrow{End}$\fi\xspace}
+\newcommand{\EndK}{\relax \ifmmode \overleftarrow{End}^\mathrm{K} \else $\overleftarrow{End}^\mathrm{K}$\fi\xspace}
+\newcommand{\EndKMC}{\relax \ifmmode \overrightarrow{End}^{\mathrm{KMC}} \else $\overrightarrow{End}^{\mathrm{KMC}}$\fi\xspace}
+
+\newcommand{\StEncBL}{\relax \ifmmode \mathcal{BL}^{\ENC} \else $\mathcal{BL}^{\ENC}$\fi\xspace}
+\newcommand{\StEncRD}{\relax \ifmmode \mathcal{RD}^{\ENC} \else $\mathcal{RD}^{\ENC}$\fi\xspace}
+\newcommand{\StKSABL}{\relax \ifmmode \mathcal{BL}^{\KSA} \else $\mathcal{BL}^{\KSA}$\fi\xspace}
+\newcommand{\StKSARD}{\relax \ifmmode \mathcal{RD}^{\KSA} \else $\mathcal{RD}^{\KSA}$\fi\xspace}
+\newcommand{\StEncGY}{\relax \ifmmode \mathcal{GY}^{\ENC} \else $\mathcal{GY}^{\ENC}$\fi\xspace}
+\newcommand{\StKSAGY}{\relax \ifmmode \mathcal{GY}^{\KSA} \else $\mathcal{GY}^{\KSA}$\fi\xspace}
+
+
+\newcommand{\totalr}{\relax \ifmmode \mathtt{total}_r \else $\mathtt{total}_r$\fi\xspace}
+\newcommand{\initrE}{\relax \ifmmode \mathtt{init}_r^{\mathrm{E}} \else $\mathtt{init}_r^{\mathrm{E}}$\fi\xspace}
+\newcommand{\initrK}{\relax \ifmmode \mathtt{init}_r^{\mathrm{K}} \else $\mathtt{init}_r^{\mathrm{K}}$\fi\xspace}
+\newcommand{\matchr}{\relax \ifmmode \mathtt{match}_r \else $\mathtt{match}_r$\fi\xspace}
+
+
+% known cells in the forward ending state
+\newcommand{\EndFwdKN}{\relax \ifmmode \mathcal{KN}^{\EndFwd} \else $\mathcal{KN}^{\EndFwd}$\fi\xspace}
+% known cells in the backward ending state
+\newcommand{\EndBwdKN}{\relax \ifmmode \mathcal{KN}^{\EndBwd} \else $\mathcal{KN}^{\EndBwd}$\fi\xspace}
+
+\newcommand{\SSB}{\relax \ifmmode \#\mathrm{SB} \else $\#\mathrm{SB}$\fi\xspace}
+\newcommand{\SSR}{\relax \ifmmode \#\mathrm{SR} \else $\#\mathrm{SR}$\fi\xspace}
+\newcommand{\SMC}{\relax \ifmmode \#\mathrm{MC} \else $\#\mathrm{MC}$\fi\xspace}
+\newcommand{\SAK}{\relax \ifmmode \#\mathrm{AK} \else $\#\mathrm{AK}$\fi\xspace}
+\newcommand{\SAC}{\relax \ifmmode \#\mathrm{AC} \else $\#\mathrm{AC}$\fi\xspace}
+\newcommand{\SAT}{\relax \ifmmode \#\mathrm{AT} \else $\#\mathrm{AT}$\fi\xspace}
+
+\newcommand{\KSSB}{\relax \ifmmode \#\mathrm{KSB} \else $\#\mathrm{KSB}$\fi\xspace}
+\newcommand{\KSSR}{\relax \ifmmode \#\mathrm{KSR} \else $\#\mathrm{KSR}$\fi\xspace}
+\newcommand{\KSMC}{\relax \ifmmode \#\mathrm{KMC} \else $\#\mathrm{KMC}$\fi\xspace}
+\newcommand{\KSAC}{\relax \ifmmode \#\mathrm{KAC} \else $\#\mathrm{KAC}$\fi\xspace}
+
+\newcommand{\AND}{\relax \ifmmode \mathtt{AND} \else $\mathtt{AND}$\fi\xspace}
+\newcommand{\OR}{\relax \ifmmode \mathtt{OR} \else $\mathtt{OR}$\fi\xspace}
+
+
+%%%% text
+
+\def\ttBL{\texttt{Blue}\xspace}
+\def\ttRD{\texttt{Red}\xspace}
+\def\ttGY{\texttt{Gray}\xspace}
+\def\ttWT{\texttt{White}\xspace}
+\def\ttBK{\texttt{Black}\xspace}
+\def\ttXOR{{\texttt{XOR}}\xspace}
+\def\ttMC{{\texttt{MC}}\xspace}
+
+\def\XORRULE{\texttt{XOR}\texttt{-RULE}\xspace}
+\def\MCRULE{\texttt{MC-RULE}\xspace}
+\def\MATCHRULE{\texttt{MATCH-RULE}\xspace}
+
+\def\EState{encryption state\xspace}
+\def\KState{key state\xspace}
+\def\EStates{encryption states\xspace}
+\def\KStates{key states\xspace}
+
+\newcommand{\SRD}{\relax \ifmmode \mathrm{S}_{\mathrm{RD}} \else $\mathrm{S}_{\mathrm{RD}}$\fi\xspace}
+\newcommand{\rijndael}{\textsf{Rijndael}\xspace}
+\newcommand{\rijndaelsb}{\textsf{SubBytes}\xspace}
+\newcommand{\rijndaelsr}{\textsf{ShiftRows}\xspace}
+\newcommand{\rijndaelmc}{\textsf{MixColumns}\xspace}
+\newcommand{\rijndaelak}{\textsf{AddRoundKey}\xspace}
+\newcommand{\rijndaelrnd}{\textsf{Round}\xspace}
+\newcommand{\rijndaelfinal}{\textsf{FinalRound}\xspace}
+\newcommand{\GGF}[1]{\relax\ifmmode\mathrm{GF}\else $\mathrm{GF}$\fi\xspace}
+\newcommand{\GF}[1]{\mathbb{F}_{#1}\xspace}
+\newcommand{\Nr}{\relax\ifmmode\mathrm{N}_\mathrm{r}\else $\mathrm{N}_\mathrm{r}$\fi\xspace}
+\newcommand{\Nb}{\relax\ifmmode\mathrm{N}_\mathrm{b}\else $\mathrm{N}_\mathrm{b}$\fi\xspace}
+\newcommand{\Nk}{\relax\ifmmode\mathrm{N}_\mathrm{k}\else $\mathrm{N}_\mathrm{k}$\fi\xspace}
+\newcommand{\rndkey}{\relax\ifmmode\mathsf{ExpandedKey}\else $\mathsf{ExpandedKey}$\fi\xspace}
+\newcommand{\rndkeyarray}{\relax\ifmmode\mathsf{W}\else $\mathsf{W}$\fi\xspace}
+\newcommand{\rc}{\relax\ifmmode\mathrm{RC}\else $\mathrm{RC}$\fi\xspace}
+
+\newcommand{\rijndaelstate}{\relax\ifmmode\mathtt{State}\else $\mathtt{State}$\fi\xspace}
+
+\newcommand{\shortsb}				{\textsf{SB}\xspace}
+\newcommand{\shortsr}				{\textsf{SR}\xspace}
+\newcommand{\shortmc}				{\textsf{MC}\xspace}
+\newcommand{\shortak}				{\textsf{AK}\xspace}
+
+\newcommand{\likesb}				{\textsf{SubBytes}\xspace}
+\newcommand{\likesr}				{\textsf{ShiftRows}\xspace}
+\newcommand{\likemc}				{\textsf{MixColumns}\xspace}
+\newcommand{\likeak}				{\textsf{AddRoundKey}\xspace}
+\newcommand{\likeks}				{\textsf{KeySchedule}\xspace}
+\newcommand{\likernd}			    {\textsf{Round}\xspace}
+\newcommand{\likefinal}				{\textsf{FinalRound}\xspace}
+\newcommand{\likemtr}{\relax \ifmmode \mathtt{MC} \else $\mathtt{MC}$\fi\xspace}
+\newcommand{\likebn}{\relax \ifmmode \mathtt{Br}_{\mathtt{n}} \else $\mathtt{Br}_{\mathtt{n}}$\fi\xspace}
+\newcommand{\likebnminus}{\relax \ifmmode \overline{\likebn} \else $\overline{\likebn}$\fi\xspace}
+\newcommand{\Nrow}{\relax \ifmmode \mathrm{N}_{\mathtt{row}} \else $\mathrm{N}_{\mathtt{row}}$\fi\xspace}
+\newcommand{\Ncol}{\relax \ifmmode \mathrm{N}_{\mathtt{col}} \else $\mathrm{N}_{\mathtt{col}}$\fi\xspace}
+\newcommand{\Niosum}{\relax \ifmmode \mathrm{N}_{\mathtt{iosum}} \else $\mathrm{N}_{\mathtt{iosum}}$\fi\xspace}
+\newcommand{\Nc}{\relax \ifmmode c \else $c$\fi\xspace}
+
+%%%% draw
+
+%\newcommand{\DoFF}{\relax \ifmmode \mathrm{DoF}^{+}_{\tiny\mathtt{bits}} \else $\mathrm{DoF}^{+}_{\tiny\mathtt{bits}}$\fi\xspace}
+%\newcommand{\DoFB}{\relax \ifmmode \mathrm{DoF}^{-}_{\tiny\mathtt{bits}} \else $\mathrm{DoF}^{-}_{\tiny\mathtt{bits}}$\fi\xspace}
+%\newcommand{\DoM}{\relax \ifmmode \mathrm{DoM}_{\tiny\mathtt{bits}} \else $\mathrm{DoM}_{\tiny\mathtt{bits}}$\fi\xspace}
+
+%\newcommand{\DoFF}{\relax \tikz{\draw[solid, fill = blue, scale = 0.18] (0, 0) rectangle (1, 1);}\xspace}
+%\newcommand{\DoFB}{\relax \tikz{\draw[solid, fill = red, scale = 0.18] (0, 0) rectangle (1, 1);}\xspace}
+%\newcommand{\DoC}{\relax \tikz{\draw[solid, fill  = gray, scale = 0.18] (0, 0) rectangle (1, 1);}\xspace}
+%\newcommand{\DoW}{\relax \tikz{\draw[solid, fill  = white, scale = 0.18] (0, 0) rectangle (1, 1);}\xspace}
+%\newcommand{\DoM}{\relax \tikz{\draw[solid, fill  = blue!50!red, scale = 0.18] (0, 0) rectangle (1, 1);}\xspace}
+
+\newcommand{\BLcell}{\relax \tikz{\draw[solid, fill  = blue, scale = 0.2] (0, 0) rectangle (1, 1);}\xspace}
+\newcommand{\RDcell}{\relax \tikz{\draw[solid, fill  = red, scale = 0.2] (0, 0) rectangle (1, 1);}\xspace}
+\newcommand{\GYcell}{\relax \tikz{\draw[solid, fill  = gray, scale = 0.2] (0, 0) rectangle (1, 1);}\xspace}
+\newcommand{\WTcell}{\relax \tikz{\draw[solid, fill  = white, scale = 0.2] (0, 0) rectangle (1, 1);}\xspace}
+\newcommand{\VTcell}{\relax \tikz{\draw[solid, fill  = blue!50!red, scale = 0.2] (0, 0) rectangle (1, 1);}\xspace}
+\newcommand{\BKcell}{\relax \tikz{\draw[solid, fill  = black, scale = 0.2 ] (0, 0) rectangle (1, 1);}\xspace}
+
+
+
